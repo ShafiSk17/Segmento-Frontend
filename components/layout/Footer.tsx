@@ -1,13 +1,10 @@
 import Link from "next/link"
-import { Twitter, Linkedin, Youtube, Instagram, MapPin, Phone } from "lucide-react"
+import { Twitter, Linkedin, Youtube, Instagram, MapPin, Phone, Facebook } from "lucide-react"
 
 export function Footer() {
     const footerLinks = {
         product: [
             { label: "Data Classification", href: "/products/data-classification" },
-            { label: "Features", href: "/features" },
-            { label: "Pricing", href: "/pricing" },
-            { label: "Solutions", href: "/solutions" },
         ],
         company: [
             { label: "About", href: "/about" },
@@ -20,6 +17,8 @@ export function Footer() {
             { label: "LinkedIn", href: "https://linkedin.com/company/segmento", icon: Linkedin },
             { label: "YouTube", href: "https://youtube.com/@segmento", icon: Youtube },
             { label: "Instagram", href: "https://instagram.com/segmento", icon: Instagram },
+            { label: "Facebook", href: "https://facebook.com/segmento", icon: Facebook },
+            { label: "TikTok", href: "https://tiktok.com/@segmento", icon: null },
         ],
         legal: [
             { label: "Privacy Policy", href: "/privacy" },
@@ -40,21 +39,6 @@ export function Footer() {
                             Privacy-first, AI-driven data products that solve real enterprise challenges.
                             Transform how you protect and analyze sensitive information.
                         </p>
-
-                        {/* Contact Sales */}
-                        <div className="space-y-3">
-                            <h4 className="text-sm font-semibold">Contact Sales</h4>
-                            <div className="flex items-start gap-2 text-sm text-gray-400">
-                                <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                                <span>Rama talkies, Opposite Road, Waltair Uplands, Vishakapatnam</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-sm text-gray-400">
-                                <Phone className="h-4 w-4" />
-                                <a href="tel:+919908727027" className="hover:text-primary transition-colors">
-                                    +91 990 872 7027
-                                </a>
-                            </div>
-                        </div>
                     </div>
 
                     {/* Product Links */}

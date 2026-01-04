@@ -17,16 +17,16 @@ const director = {
 
 const team = [
     {
-        name: "Anuksha Satish Shirgave",
+        name: "Anuksha Shirgave",
         role: "Web & UI Developer",
-        bio: "I am a UI & Web Developer at Segmento, focused on building clean, responsive, and user-friendly web interfaces. I specialize in transforming ideas and designs into high-performance websites using modern frontend technologies. With a strong eye for detail and usability, I ensure every interface is visually appealing, intuitive, and aligned with Segmento's data-driven vision. I enjoy creating scalable UI components, improving user experience, and delivering designs that balance aesthetics with functionality.",
+        bio: "Anuksha Shirgave is a UI & Web Developer at Segmento, focused on building clean, responsive, and user-friendly web interfaces. She specializes in transforming ideas and designs into high-performance websites using modern frontend technologies. With a strong eye for detail and usability, she ensures every interface is visually appealing, intuitive, and aligned with Segmento's data-driven vision. Anuksha excels at creating scalable UI components, improving user experience, and delivering designs that balance aesthetics with functionality, contributing to Segmento's mission of making data intelligence accessible through exceptional web experiences.",
         image: "/images/mem2.jpeg",
         linkedin: "https://www.linkedin.com/in/anuksha-shirgave-703058232",
     },
     {
-        name: "SHAIK ADAM SHAFI",
+        name: "Adam Shafi",
         role: "DATA AND AI TECHNOLOGIES ENGINEER AT SEGMENTO",
-        bio: "I am a Data & AI Technologies Engineer at Segmento, focused on building intelligent, data-driven solutions that solve real-world business problems. I specialize in developing AI-powered systems and machine learning models using modern frameworks and technologies. With a strong focus on precision and innovation, I ensure every solution is scalable, efficient, and aligned with Segmento's privacy-first vision. I enjoy working on complex data challenges, creating intelligent automation, and delivering products that transform how enterprises handle sensitive information.",
+        bio: "Adam Shafi is a Data & AI Technologies Engineer at Segmento, focused on building intelligent, data-driven solutions that solve real-world business problems. He specializes in developing AI-powered systems and machine learning models using modern frameworks and technologies. With a strong focus on precision and innovation, he ensures every solution is scalable, efficient, and aligned with Segmento's privacy-first vision. Adam excels at working on complex data challenges, creating intelligent automation, and delivering products that transform how enterprises handle sensitive information, driving Segmento's commitment to privacy-centric AI innovation.",
         image: "/images/shafi-profile.jpg",
         linkedin: "http://www.linkedin.com/in/shafisk",
     },
@@ -82,8 +82,8 @@ export default function AboutPage() {
                 <div className="container mx-auto px-4">
                     <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">Meet Our Executive Director</h2>
                     <div className="max-w-4xl mx-auto bg-white rounded-2xl border border-border/50 shadow-xl p-8 md:p-12">
-                        <div className="flex flex-col md:flex-row gap-8 items-center">
-                            <div className="flex-shrink-0">
+                        <div className="flex flex-col md:flex-row gap-8 items-start">
+                            <div className="flex-shrink-0 flex flex-col items-center gap-4">
                                 <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-primary/20">
                                     <Image
                                         src={director.image}
@@ -92,20 +92,20 @@ export default function AboutPage() {
                                         className="object-cover"
                                     />
                                 </div>
+                                <Link
+                                    href={director.linkedin}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors"
+                                >
+                                    <Linkedin className="w-5 h-5" />
+                                    LinkedIn
+                                </Link>
                             </div>
                             <div className="flex-1 text-center md:text-left">
                                 <h3 className="text-2xl md:text-3xl font-bold mb-2">{director.name}</h3>
                                 <p className="text-primary font-semibold mb-4">{director.role}</p>
                                 <p className="text-muted-foreground mb-6 leading-relaxed text-justify">{director.bio}</p>
-                                <Link
-                                    href={director.linkedin}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
-                                >
-                                    <Linkedin className="w-5 h-5" />
-                                    Connect on LinkedIn
-                                </Link>
                             </div>
                         </div>
                     </div>
@@ -119,25 +119,26 @@ export default function AboutPage() {
                         {team.map((member) => (
                             <div
                                 key={member.name}
-                                className="bg-white rounded-2xl border border-border/50 shadow-lg p-6 hover:shadow-xl transition-shadow group"
+                                className="bg-white rounded-2xl border border-border/50 shadow-lg p-6 hover:shadow-xl transition-shadow"
                             >
-                                <div className="relative w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden">
-                                    <Image
-                                        src={member.image}
-                                        alt={member.name}
-                                        fill
-                                        className="object-cover"
-                                    />
-                                    <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                        <Link
-                                            href={member.linkedin}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="bg-white rounded-full p-3 shadow-lg"
-                                        >
-                                            <Linkedin className="w-6 h-6 text-primary" />
-                                        </Link>
+                                <div className="flex flex-col items-center gap-4 mb-6">
+                                    <div className="relative w-32 h-32 rounded-full overflow-hidden">
+                                        <Image
+                                            src={member.image}
+                                            alt={member.name}
+                                            fill
+                                            className="object-cover"
+                                        />
                                     </div>
+                                    <Link
+                                        href={member.linkedin}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors"
+                                    >
+                                        <Linkedin className="w-5 h-5" />
+                                        LinkedIn
+                                    </Link>
                                 </div>
                                 <div className="text-center">
                                     <h3 className="text-xl font-bold mb-2">{member.name}</h3>

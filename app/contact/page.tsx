@@ -2,6 +2,7 @@
 
 import { push, ref } from "firebase/database"
 import { db } from "@/lib/firebase"
+import { triggerWelcomeEmail } from "@/lib/emailService"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -43,6 +44,7 @@ export default function ContactPage() {
         e.preventDefault()
 
         try {
+            // Step 1: Save to Firebase (existing logic)
             await push(ref(db, "contacts"), {
                 name: formData.name,
                 email: formData.email,
@@ -50,6 +52,10 @@ export default function ContactPage() {
                 message: formData.message,
                 createdAt: Date.now(),
             })
+
+            // Step 2: Trigger welcome email via backend (NEW - Push Architecture)
+            // Fire-and-forget: doesn't block user experience
+            triggerWelcomeEmail(formData.name, formData.email)
 
             setSubmitted(true)
             setFormData({

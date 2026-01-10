@@ -128,9 +128,18 @@ export default function CareersPage() {
                         <p className="text-muted-foreground mb-4">
                             Don't see a perfect fit? We're always looking for talented people.
                         </p>
+                        <p className="text-lg font-semibold mb-4">
+                            Send your resume to{" "}
+                            <a
+                                href="mailto:hr@segmento.in"
+                                className="text-primary hover:underline"
+                            >
+                                hr@segmento.in
+                            </a>
+                        </p>
                         <Link href="/contact">
                             <Button size="lg" variant="outline">
-                                Send Us Your Resume
+                                Contact Us
                             </Button>
                         </Link>
                     </div>

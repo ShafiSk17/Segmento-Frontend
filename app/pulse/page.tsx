@@ -3,9 +3,8 @@
 import Link from "next/link";
 import { ArrowRight, TrendingUp, Zap } from "lucide-react";
 
-// Force dynamic rendering
+// Force dynamic rendering (for client components, only 'dynamic' is allowed)
 export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 
 interface NewsItem {
     id: string;

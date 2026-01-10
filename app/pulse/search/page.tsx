@@ -7,10 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { searchNews, type Article } from "@/lib/pulse/newsApi";
 
-// Force dynamic rendering
+// Force dynamic rendering (for client components, only 'dynamic' is allowed)
 export const dynamic = 'force-dynamic';
-export const revalidate = 0;
-export const fetchCache = 'force-no-store';
 
 export default function SearchPage() {
     const searchParams = useSearchParams();

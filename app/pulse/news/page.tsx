@@ -6,8 +6,10 @@ import Link from "next/link";
 import { fetchNewsByCategory, type Article } from "@/lib/pulse/newsApi";
 import { Clock, ExternalLink } from "lucide-react";
 
-// Force dynamic rendering (required for useSearchParams and API calls)
+// Force dynamic rendering - completely disable static generation
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
 
 const categories = [
     { id: "ai", name: "AI" },

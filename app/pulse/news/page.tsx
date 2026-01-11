@@ -5,22 +5,110 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { fetchNewsByCategory, type Article } from "@/lib/pulse/newsApi";
 import { Clock, ExternalLink } from "lucide-react";
+import ViewCounter from "@/components/pulse/ViewCounter";
 
 // Force dynamic rendering (for client components, only 'dynamic' is allowed)
 export const dynamic = 'force-dynamic';
 
-const allCategories = [
-    { id: "ai", name: "AI" },
-    { id: "cloud-computing", name: "Cloud Computing" },
-    { id: "magazines", name: "Magazines" },
-];
+// Category relationship mapping - each category shows only its related subcategories
+const categoryRelationships: Record<string, Array<{ id: string; name: string }>> = {
+    // Data categories show all data subcategories
+    'data-security': [
+        { id: "data-security", name: "Data Security" },
+        { id: "data-governance", name: "Data Governance" },
+        { id: "data-privacy", name: "Data Privacy" },
+        { id: "data-engineering", name: "Data Engineering" },
+    ],
+    'data-governance': [
+        { id: "data-security", name: "Data Security" },
+        { id: "data-governance", name: "Data Governance" },
+        { id: "data-privacy", name: "Data Privacy" },
+        { id: "data-engineering", name: "Data Engineering" },
+    ],
+    'data-privacy': [
+        { id: "data-security", name: "Data Security" },
+        { id: "data-governance", name: "Data Governance" },
+        { id: "data-privacy", name: "Data Privacy" },
+        { id: "data-engineering", name: "Data Engineering" },
+    ],
+    'data-engineering': [
+        { id: "data-security", name: "Data Security" },
+        { id: "data-governance", name: "Data Governance" },
+        { id: "data-privacy", name: "Data Privacy" },
+        { id: "data-engineering", name: "Data Engineering" },
+    ],
 
-const dataCategories = [
-    { id: "data-security", name: "Data Security" },
-    { id: "data-governance", name: "Data Governance" },
-    { id: "data-privacy", name: "Data Privacy" },
-    { id: "data-engineering", name: "Data Engineering" },
-];
+    // AI shows only AI
+    'ai': [{ id: "ai", name: "AI" }],
+
+    // Cloud Computing shows cloud provider subcategories
+    'cloud-computing': [
+        { id: "cloud-computing", name: "All Cloud" },
+        { id: "cloud-aws", name: "AWS" },
+        { id: "cloud-gcp", name: "GCP" },
+        { id: "cloud-azure", name: "Azure" },
+        { id: "cloud-ibm", name: "IBM Cloud" },
+        { id: "cloud-oracle", name: "Oracle" },
+        { id: "cloud-digitalocean", name: "DigitalOcean" },
+    ],
+    'cloud-aws': [
+        { id: "cloud-computing", name: "All Cloud" },
+        { id: "cloud-aws", name: "AWS" },
+        { id: "cloud-gcp", name: "GCP" },
+        { id: "cloud-azure", name: "Azure" },
+        { id: "cloud-ibm", name: "IBM Cloud" },
+        { id: "cloud-oracle", name: "Oracle" },
+        { id: "cloud-digitalocean", name: "DigitalOcean" },
+    ],
+    'cloud-gcp': [
+        { id: "cloud-computing", name: "All Cloud" },
+        { id: "cloud-aws", name: "AWS" },
+        { id: "cloud-gcp", name: "GCP" },
+        { id: "cloud-azure", name: "Azure" },
+        { id: "cloud-ibm", name: "IBM Cloud" },
+        { id: "cloud-oracle", name: "Oracle" },
+        { id: "cloud-digitalocean", name: "DigitalOcean" },
+    ],
+    'cloud-azure': [
+        { id: "cloud-computing", name: "All Cloud" },
+        { id: "cloud-aws", name: "AWS" },
+        { id: "cloud-gcp", name: "GCP" },
+        { id: "cloud-azure", name: "Azure" },
+        { id: "cloud-ibm", name: "IBM Cloud" },
+        { id: "cloud-oracle", name: "Oracle" },
+        { id: "cloud-digitalocean", name: "DigitalOcean" },
+    ],
+    'cloud-ibm': [
+        { id: "cloud-computing", name: "All Cloud" },
+        { id: "cloud-aws", name: "AWS" },
+        { id: "cloud-gcp", name: "GCP" },
+        { id: "cloud-azure", name: "Azure" },
+        { id: "cloud-ibm", name: "IBM Cloud" },
+        { id: "cloud-oracle", name: "Oracle" },
+        { id: "cloud-digitalocean", name: "DigitalOcean" },
+    ],
+    'cloud-oracle': [
+        { id: "cloud-computing", name: "All Cloud" },
+        { id: "cloud-aws", name: "AWS" },
+        { id: "cloud-gcp", name: "GCP" },
+        { id: "cloud-azure", name: "Azure" },
+        { id: "cloud-ibm", name: "IBM Cloud" },
+        { id: "cloud-oracle", name: "Oracle" },
+        { id: "cloud-digitalocean", name: "DigitalOcean" },
+    ],
+    'cloud-digitalocean': [
+        { id: "cloud-computing", name: "All Cloud" },
+        { id: "cloud-aws", name: "AWS" },
+        { id: "cloud-gcp", name: "GCP" },
+        { id: "cloud-azure", name: "Azure" },
+        { id: "cloud-ibm", name: "IBM Cloud" },
+        { id: "cloud-oracle", name: "Oracle" },
+        { id: "cloud-digitalocean", name: "DigitalOcean" },
+    ],
+
+    // Magazines shows only magazines
+    'magazines': [{ id: "magazines", name: "Magazines" }],
+};
 
 function NewsContent() {
     const searchParams = useSearchParams();
@@ -30,9 +118,8 @@ function NewsContent() {
     const [activeCategory, setActiveCategory] = useState<string>(categoryParam);
     const [loading, setLoading] = useState<boolean>(false);
 
-    // Determine which categories to show based on current category
-    const isDataCategory = dataCategories.some(cat => cat.id === activeCategory);
-    const categoriesToShow = isDataCategory ? dataCategories : allCategories;
+    // Get categories to show based on current category
+    const categoriesToShow = categoryRelationships[activeCategory] || [{ id: activeCategory, name: activeCategory }];
 
     useEffect(() => {
         setActiveCategory(categoryParam);
@@ -59,7 +146,7 @@ function NewsContent() {
         };
 
         getNews();
-    }, [activeCategory]);
+    }, [activeCategory, newsData]);
 
     const articles = newsData[activeCategory] || [];
 
@@ -72,8 +159,8 @@ function NewsContent() {
                         key={cat.id}
                         href={`/pulse/news?category=${cat.id}`}
                         className={`px-6 py-2 rounded-full transition-all ${activeCategory === cat.id
-                                ? "bg-blue-600 text-white shadow-lg"
-                                : "bg-gray-100 hover:bg-gray-200"
+                            ? "bg-blue-600 text-white shadow-lg"
+                            : "bg-gray-100 hover:bg-gray-200"
                             }`}
                     >
                         {cat.name}
@@ -118,10 +205,13 @@ function NewsContent() {
                                 <p className="text-sm text-gray-600 mb-3 line-clamp-2">
                                     {article.description}
                                 </p>
-                                <div className="flex items-center gap-2 text-xs text-gray-500">
-                                    <Clock className="w-3 h-3" />
-                                    <span>{new Date(article.publishedAt).toLocaleDateString()}</span>
+                                <div className="flex items-center gap-2 text-xs text-gray-500 flex-wrap">
+                                    <div className="flex items-center gap-1">
+                                        <Clock className="w-3 h-3" />
+                                        <span>{new Date(article.publishedAt).toLocaleDateString()}</span>
+                                    </div>
                                     {article.source && <span>• {article.source}</span>}
+                                    <ViewCounter articleUrl={article.url} />
                                 </div>
                             </div>
                         </a>

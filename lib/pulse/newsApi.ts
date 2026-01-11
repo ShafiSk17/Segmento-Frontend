@@ -12,6 +12,22 @@ export interface Article {
 
 export const fetchNewsByCategory = async (category: string): Promise<Article[]> => {
     try {
+        // Use RSS feeds for all cloud-related categories (real-time updates from providers)
+        if (category === 'cloud-computing' || category.startsWith('cloud-')) {
+            const res = await fetch(`/api/pulse/rss?category=${category}`);
+            if (!res.ok) {
+                console.error('Failed to fetch RSS:', await res.text());
+                // Fallback to NewsAPI if RSS fails
+                const fallback = await fetch(`/api/pulse/news?category=${category}`);
+                if (!fallback.ok) return [];
+                const data = await fallback.json();
+                return data.articles || [];
+            }
+            const data = await res.json();
+            return data.articles || [];
+        }
+
+        // Use NewsAPI for other categories
         const res = await fetch(`/api/pulse/news?category=${category}`);
         if (!res.ok) {
             console.error('Failed to fetch news:', await res.text());

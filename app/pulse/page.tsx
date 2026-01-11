@@ -68,14 +68,15 @@ export default function PulsePage() {
                 href={`/pulse/news?category=${category}`}
                 className={`${colSpan} ${rowSpan > 1 ? 'row-span-2' : ''} group relative overflow-hidden rounded-2xl ${height} transition-all duration-500 hover:shadow-2xl hover:scale-[1.01]`}
             >
-                {/* Background Image with Overlay */}
+                {/* Background Image with Dark Overlay for Text Readability */}
                 {imageUrl && !loading ? (
                     <>
                         <div
                             className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
                             style={{ backgroundImage: `url(${imageUrl})` }}
                         ></div>
-                        <div className={`absolute inset-0 bg-gradient-to-br ${fallbackGradient} opacity-80 group-hover:opacity-70 transition-opacity duration-500`}></div>
+                        {/* Subtle dark overlay for text readability only */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 group-hover:from-black/70 transition-all duration-500"></div>
                     </>
                 ) : (
                     <div className={`absolute inset-0 bg-gradient-to-br ${fallbackGradient}`}></div>

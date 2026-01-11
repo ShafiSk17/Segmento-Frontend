@@ -38,3 +38,22 @@ export async function fetchNewsByCategory(category: string): Promise<Article[]> 
         return [];
     }
 }
+
+export async function searchNews(query: string): Promise<Article[]> {
+    try {
+        const response = await fetch(`/api/pulse/search?q=${encodeURIComponent(query)}`, {
+            cache: 'no-store',
+        });
+
+        if (!response.ok) {
+            console.error('Failed to search news:', response.statusText);
+            return [];
+        }
+
+        const data = await response.json();
+        return data.articles || [];
+    } catch (error) {
+        console.error('Error searching news:', error);
+        return [];
+    }
+}
